@@ -1,0 +1,23 @@
+name: Sync NVIDIA macOS Driver Fork
+
+on:
+  schedule:
+    - cron: "0 */6 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  sync-fork:
+    name: Sync Fork with Upstream
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Sync with Upstream Repository
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh repo sync "$GITHUB_REPOSITORY" \
+            --source nullmoth/nvidia-macos-driver \
+            --branch main
